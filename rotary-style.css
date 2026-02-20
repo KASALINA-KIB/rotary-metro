@@ -1,0 +1,103 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+.container {
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+}
+header {
+    background: #015491; /* Royal Blue */
+    color: white;
+    padding: 20px;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.logo {
+    max-width: 150px;
+    margin-bottom: 10px;
+}
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+h1 { font-size: 1.5rem; margin-bottom: 5px; }
+h2 { color: #015491; margin-top: 0; }
+.qr-placeholder {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 2px dashed #015491;
+}
+.qr-placeholder img { margin-top: 10px; }
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #015491; /* Royal Blue */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+}
+button.secondary {
+    background-color: #f7a81b; /* Rotary Gold */
+    color: #015491;
+    margin-top: 10px;
+}
+button.danger-btn { background-color: #c0392b; margin-top: 20px; }
+button:hover { opacity: 0.9; }
+.notice {
+    font-size: 0.9rem;
+    color: #015491;
+    font-style: italic;
+    background: #e8f4fd;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+hr { border: 0; border-top: 1px solid #ddd; margin: 20px 0; }
+.attendance-section, .makeup-section { text-align: left; }
+.attendance-section h3, .makeup-section h3 { color: #015491; font-size: 1.1rem; }
+select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; }
+.attendance-btn { background-color: #27ae60; margin-top: 10px; }
+.attendance-btn:hover { background-color: #2ecc71; }
+.entry-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+.entry-table th { text-align: left; font-size: 0.8rem; color: #015491; }
+.entry-table td { padding: 4px 2px; }
+.entry-table input { margin: 0; padding: 8px; font-size: 0.85rem; }
+.history-list { margin-top: 15px; border-top: 1px dashed #ccc; padding-top: 10px; }
+.makeup-item { background: #f9f9f9; border-left: 4px solid #f7a81b; padding: 8px; margin-bottom: 5px; font-size: 0.85rem; }
+.makeup-item small { color: #666; display: block; }
+.hidden { display: none; }
+.back-btn {
+    width: auto;
+    background: none;
+    color: #015491;
+    padding: 5px;
+    margin-bottom: 10px;
+    display: block;
+    text-align: left;
+}
+.btn-group {
+    display: flex;
+    flex-direction: column;
+}

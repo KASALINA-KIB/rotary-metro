@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotary Club of Kampala Metropolitan - Registration</title>
+    <link rel="stylesheet" href="rotary-style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="rotary metro.jpg" alt="Rotary Club of Kampala Metropolitan Logo" class="logo">
+            <h1>Rotary Club of Kampala Metropolitan</h1>
+            <p>Welcome to our Registration Portal</p>
+        </header>
+
+        <!-- Selection Screen -->
+        <div id="selection-screen" class="card">
+            <h2>Select Category</h2>
+            <div class="btn-group">
+                <button onclick="showForm('member-form')">Member Portal</button>
+                <button onclick="showForm('guest-form')" class="secondary">Guest Registration</button>
+            </div>
+            <div class="qr-placeholder">
+                <p>SCAN QR CODE TO REGISTER</p>
+                <!-- Using a placeholder QR code image -->
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://rotarykampalametro.org/register" alt="QR Code">
+            </div>
+        </div>
+
+        <!-- Member Form -->
+        <div id="member-form" class="card hidden">
+            <button class="back-btn" onclick="showForm('selection-screen')">← Back</button>
+            <h2>Member Portal</h2>
+            <p class="notice">New members: Please fill in all details to register.</p>
+            <form id="memberRegistration">
+                <input type="text" id="m-name" placeholder="Full Name (for new registration)">
+                <input type="tel" id="m-phone" placeholder="Phone Number (for new registration)">
+                <input type="email" id="m-email" placeholder="Member Email" required>
+                <input type="password" id="m-password" placeholder="Password" required>
+                <div class="btn-group">
+                    <button type="submit" name="action" value="register">Register New Member</button>
+                    <button type="submit" name="action" value="login" class="secondary">Login</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Guest Form -->
+        <div id="guest-form" class="card hidden">
+            <button class="back-btn" onclick="showForm('selection-screen')">← Back</button>
+            <h2>Guest Registration</h2>
+            <form id="guestRegistration">
+                <select id="g-category" required onchange="toggleGuestFields()">
+                    <option value="">-- Select Category --</option>
+                    <option value="Visiting Rotarian">Visiting Rotarian</option>
+                    <option value="Visiting Rotaractor">Visiting Rotaractor</option>
+                    <option value="Guest">Guest</option>
+                </select>
+                <input type="text" id="g-name" placeholder="Full Name" required>
+                <input type="text" id="g-club" placeholder="Club Name" class="hidden">
+                <input type="email" id="g-email" placeholder="Email Address">
+                <input type="tel" id="g-phone" placeholder="Phone Number" required>
+                <input type="text" id="g-inviter" placeholder="Invited By (Optional)">
+                <button type="submit">Register and Attend</button>
+            </form>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="card hidden">
+            <h2 id="welcome-msg">Welcome!</h2>
+            <p id="user-info"></p>
+
+            <div class="attendance-section">
+                <h3>Today's Fellowship Attendance</h3>
+                <label for="buddy-group">Your Buddy Group:</label>
+                <select id="buddy-group">
+                    <option value="">-- Select Your Buddy Group --</option>
+                    <option value="Kampala Division">Kampala Division</option>
+                    <option value="Nakawa Division">Nakawa Division</option>
+                    <option value="Rubaga Division">Rubaga Division</option>
+                    <option value="Makindye Division">Makindye Division</option>
+                    <option value="Kawempe Division">Kawempe Division</option>
+                </select>
+                <button onclick="logAttendance()" class="attendance-btn">Confirm My Fellowship Attendance</button>
+            </div>
+
+            <hr>
+
+            <div class="makeup-section">
+                <h3>Log Makeup Visits</h3>
+                <p class="notice">Record your visits to other clubs here (up to 7).</p>
+                <table id="makeup-table" class="entry-table">
+                    <thead>
+                        <tr>
+                            <th>Club Visited</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><input type="text" class="m-club"></td><td><input type="date" class="m-date"></td></tr>
+                        <tr><td><input type="text" class="m-club"></td><td><input type="date" class="m-date"></td></tr>
+                        <tr><td><input type="text" class="m-club"></td><td><input type="date" class="m-date"></td></tr>
+                        <tr><td><input type="text" class="m-club"></td><td><input type="date" class="m-date"></td></tr>
+                        <tr><td><input type="text" class="m-club"></td><td><input type="date" class="m-date"></td></tr>
+                        <tr><td><input type="text" class="m-club"></td><td><input type="date" class="m-date"></td></tr>
+                        <tr><td><input type="text" class="m-club"></td><td><input type="date" class="m-date"></td></tr>
+                    </tbody>
+                </table>
+                <button onclick="logMakeup()" class="secondary">Submit All Makeups</button>
+                <div id="makeup-history" class="history-list">
+                    <!-- Recent visits will appear here -->
+                </div>
+            </div>
+
+            <button onclick="logout()" class="danger-btn">Logout</button>
+        </div>
+    </div>
+    <script src="rotary-script.js"></script>
+</body>
+</html>
