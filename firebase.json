@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "aider-env/**",
+      ".zencoder/**",
+      ".zenflow/**",
+      "**/*.exe",
+      "**/*.pyc",
+      "__pycache__/**"
+    ]
+  }
+}
