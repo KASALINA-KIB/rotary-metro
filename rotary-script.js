@@ -123,6 +123,12 @@ window.exportDatabase = async () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Check if redirected from QR code
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('source') === 'qr') {
+        showForm('selection-screen');
+    }
+
     // Background logic
     const images = ['images/km1.jpeg', 'images/km2.jpeg', 'images/km3.jpeg', 'images/km4.jpeg', 'images/km5.jpeg', 'images/km6.jpeg', 'images/km7.jpeg', 'images/km8.jpeg'];
     let currentImageIndex = 0;
