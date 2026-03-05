@@ -1,0 +1,8 @@
+Category,Name,Email,Phone,Club,Buddy Group,Details/Inviter,Date,Type
+Member,Kawalya Micheal,kawalya.m@example.com,0700000001,,Kampala Division,Member Registration,2024-03-01 10:00:00,Member
+Member,Jane Doe,jane.doe@example.com,0700000002,,Nakawa Division,Member Registration,2024-03-01 10:05:00,Member
+Guest,John Smith,jsmith@gmail.com,0700000003,RC Kampala West,,Kawalya Micheal,2024-03-01 18:30:00,Guest Attendance
+Attendance,Kawalya Micheal,kawalya.m@example.com,0700000001,,Kampala Division,,2024-03-04 18:00:00,Fellowship
+Attendance,Jane Doe,jane.doe@example.com,0700000002,,Nakawa Division,,2024-03-04 18:05:00,Fellowship
+Makeup,Kawalya Micheal,kawalya.m@example.com,0700000001,RC Entebbe,,,2024-03-02,Makeup Visit
+Makeup,Jane Doe,jane.doe@example.com,0700000002,No Makeup Visit,,,2024-03-04,No Makeup Visit

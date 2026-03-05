@@ -4,59 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rotary Club of Kampala Metropolitan - Registration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="rotary-style.css">
     <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
 </head>
 <body>
+    <!-- Background slideshow layers -->
     <div id="bg-layer-1" class="bg-layer"></div>
     <div id="bg-layer-2" class="bg-layer transparent"></div>
+
     <div class="container">
+
         <header>
             <img src="images/rotary metro.jpg" alt="Rotary Club of Kampala Metropolitan Logo" class="logo">
             <h1>Rotary Club of Kampala Metropolitan</h1>
             <p>Welcome to our Registration Portal</p>
+            <span class="header-divider"></span>
         </header>
 
-        <!-- Landing Screen -->
+        <!-- ── Landing Screen ───────────────────────────────── -->
         <div id="landing-screen" class="card">
             <h2>Welcome</h2>
-            <div class="qr-placeholder" style="border-top: none; margin-top: 0;">
-                <p>Scan QR Code to join us</p>
+            <div class="qr-placeholder no-top-border">
+                <p>Scan QR Code to register</p>
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://rotary-registration-6261e.web.app/?source=qr" alt="QR Code">
-                <button onclick="showForm('selection-screen')" style="margin-top: 20px;">ENTER PORTAL</button>
+                <button onclick="showForm('selection-screen')" class="mt-20">
+                    Enter Portal &rarr;
+                </button>
             </div>
         </div>
 
-        <!-- Selection Screen -->
+        <!-- ── Selection Screen ─────────────────────────────── -->
         <div id="selection-screen" class="card hidden">
             <h2>Select Category</h2>
-            <div class="btn-group">
-                <button onclick="showForm('member-form')">Member Portal</button>
-                <button onclick="showForm('guest-form')" class="secondary">Guest Registration</button>
-                <button onclick="showForm('admin-login-form')" class="secondary" style="background-color: #34495e; color: white; margin-top: 20px; font-size: 0.8rem; opacity: 0.6;">Admin Access</button>
+            <p style="color:var(--color-muted);font-size:0.88rem;margin:0 0 18px;">How are you attending today?</p>
+
+            <div class="portal-grid">
+                <button class="portal-card primary" onclick="showForm('member-form')">
+                    <span class="portal-card-icon">&#128100;</span>
+                    <span class="portal-card-title">Member Portal</span>
+                    <span class="portal-card-desc">Login or register</span>
+                </button>
+                <button class="portal-card gold" onclick="showForm('guest-form')">
+                    <span class="portal-card-icon">&#128075;</span>
+                    <span class="portal-card-title">Guest Registration</span>
+                    <span class="portal-card-desc">Visitors &amp; guests</span>
+                </button>
             </div>
+
+            <button onclick="showForm('admin-login-form')" class="btn-admin">
+                &#128272; Admin Access
+            </button>
         </div>
 
-        <!-- Admin Login Form -->
+        <!-- ── Admin Login ───────────────────────────────────── -->
         <div id="admin-login-form" class="card hidden">
-            <button class="back-btn" onclick="showForm('selection-screen')">← Back</button>
+            <button class="back-btn" onclick="showForm('selection-screen')">&#8592; Back</button>
             <h2>Admin Login</h2>
             <form id="adminLogin">
-                <input type="password" id="admin-pass" placeholder="Admin Passcode" required>
+                <input type="password" id="admin-pass" placeholder="Enter Admin Passcode" required autocomplete="current-password">
                 <button type="submit">Access Records</button>
             </form>
         </div>
 
-        <!-- Member Form -->
+        <!-- ── Member Form ───────────────────────────────────── -->
         <div id="member-form" class="card hidden">
-            <button class="back-btn" onclick="showForm('selection-screen')">← Back</button>
+            <button class="back-btn" onclick="showForm('selection-screen')">&#8592; Back</button>
             <h2>Member Portal</h2>
-            <p class="notice">New members: Please fill in all details to register.</p>
+            <p class="notice">New members: fill in all four fields. Returning members: email &amp; password only.</p>
             <form id="memberRegistration">
-                <input type="text" id="m-name" placeholder="Full Name (for new registration)">
-                <input type="tel" id="m-phone" placeholder="WhatsApp Phone Number (for new registration)">
-                <input type="email" id="m-email" placeholder="Member Email" required>
-                <input type="password" id="m-password" placeholder="Password" required>
+                <input type="text"     id="m-name"     placeholder="Full Name (new registration only)">
+                <input type="tel"      id="m-phone"    placeholder="WhatsApp Number (new registration only)">
+                <input type="email"    id="m-email"    placeholder="Member Email" required autocomplete="email">
+                <input type="password" id="m-password" placeholder="Password"    required autocomplete="current-password">
                 <div class="btn-group">
                     <button type="submit" name="action" value="register">Register New Member</button>
                     <button type="submit" name="action" value="login" class="secondary">Login</button>
@@ -64,9 +85,9 @@
             </form>
         </div>
 
-        <!-- Guest Form -->
+        <!-- ── Guest Form ────────────────────────────────────── -->
         <div id="guest-form" class="card hidden">
-            <button class="back-btn" onclick="showForm('selection-screen')">← Back</button>
+            <button class="back-btn" onclick="showForm('selection-screen')">&#8592; Back</button>
             <h2>Guest Registration</h2>
             <form id="guestRegistration">
                 <select id="g-category" required onchange="toggleGuestFields()">
@@ -75,23 +96,39 @@
                     <option value="Visiting Rotaractor">Visiting Rotaractor</option>
                     <option value="Guest">Guest</option>
                 </select>
-                <input type="text" id="g-name" placeholder="Full Name" required>
-                <input type="text" id="g-club" placeholder="Club Name" class="hidden">
-                <input type="email" id="g-email" placeholder="Email Address">
-                <input type="tel" id="g-phone" placeholder="WhatsApp Phone Number" required>
-                <input type="text" id="g-inviter" placeholder="Invited By (Optional)">
-                <button type="submit">Register and Attend</button>
+                <input type="text"  id="g-name"    placeholder="Full Name"                    required>
+                <input type="text"  id="g-club"    placeholder="Club Name"                    class="hidden">
+                <input type="email" id="g-email"   placeholder="Email Address">
+                <input type="tel"   id="g-phone"   placeholder="WhatsApp Phone Number"        required>
+                <input type="text"  id="g-inviter" placeholder="Invited By (Optional)">
+                <button type="submit">Register &amp; Attend</button>
             </form>
         </div>
 
-        <!-- Dashboard -->
+        <!-- ── Member Dashboard ──────────────────────────────── -->
         <div id="dashboard" class="card hidden">
             <h2 id="welcome-msg">Welcome!</h2>
-            <p id="user-info"></p>
+            <p id="user-info" style="color:var(--color-muted);font-size:0.88rem;margin:-6px 0 16px;"></p>
+
+            <!-- Live stats -->
+            <div class="stats-strip">
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-today">—</span>
+                    <span class="stat-label">Today's Attendance</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-makeups-count">—</span>
+                    <span class="stat-label">My Makeups</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-members">—</span>
+                    <span class="stat-label">Members</span>
+                </div>
+            </div>
 
             <div class="attendance-section">
-                <h3>Today's Fellowship Attendance</h3>
-                <label for="buddy-group">Your Buddy Group:</label>
+                <h3>&#128203; Today's Fellowship Attendance</h3>
+                <label for="buddy-group" style="font-size:0.88rem;color:var(--color-muted);">Your Buddy Group:</label>
                 <select id="buddy-group">
                     <option value="">-- Select Your Buddy Group --</option>
                     <option value="Kampala Division">Kampala Division</option>
@@ -100,14 +137,16 @@
                     <option value="Makindye Division">Makindye Division</option>
                     <option value="Kawempe Division">Kawempe Division</option>
                 </select>
-                <button onclick="logAttendance()" class="attendance-btn">Confirm My Fellowship Attendance</button>
+                <button onclick="logAttendance()" class="attendance-btn">
+                    &#10003; Confirm My Attendance
+                </button>
             </div>
 
             <hr>
 
             <div class="makeup-section">
-                <h3>Log Makeup Visits</h3>
-                <p class="notice">Record your visits to other clubs here (up to 7).</p>
+                <h3>&#9992; Log Makeup Visits</h3>
+                <p class="notice">Record your visits to other clubs here (up to 7). Submit empty to report no visits.</p>
                 <table id="makeup-table" class="entry-table">
                     <thead>
                         <tr>
@@ -116,46 +155,71 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td><input type="text" class="m-club"></td><td><input type="date" class="m-date"></td></tr>
-                        <tr><td><input type="text" class="m-club"></td><td><input type="date" class="m-date"></td></tr>
-                        <tr><td><input type="text" class="m-club"></td><td><input type="date" class="m-date"></td></tr>
-                        <tr><td><input type="text" class="m-club"></td><td><input type="date" class="m-date"></td></tr>
-                        <tr><td><input type="text" class="m-club"></td><td><input type="date" class="m-date"></td></tr>
-                        <tr><td><input type="text" class="m-club"></td><td><input type="date" class="m-date"></td></tr>
-                        <tr><td><input type="text" class="m-club"></td><td><input type="date" class="m-date"></td></tr>
+                        <tr><td><input type="text" class="m-club" placeholder="Club name"></td><td><input type="date" class="m-date"></td></tr>
+                        <tr><td><input type="text" class="m-club" placeholder="Club name"></td><td><input type="date" class="m-date"></td></tr>
+                        <tr><td><input type="text" class="m-club" placeholder="Club name"></td><td><input type="date" class="m-date"></td></tr>
+                        <tr><td><input type="text" class="m-club" placeholder="Club name"></td><td><input type="date" class="m-date"></td></tr>
+                        <tr><td><input type="text" class="m-club" placeholder="Club name"></td><td><input type="date" class="m-date"></td></tr>
+                        <tr><td><input type="text" class="m-club" placeholder="Club name"></td><td><input type="date" class="m-date"></td></tr>
+                        <tr><td><input type="text" class="m-club" placeholder="Club name"></td><td><input type="date" class="m-date"></td></tr>
                     </tbody>
                 </table>
-                <button onclick="logMakeup()" class="secondary">Submit All Makeups</button>
-                <div id="makeup-history" class="history-list">
-                    <!-- Recent visits will appear here -->
-                </div>
+                <button onclick="logMakeup()" class="secondary">Submit Makeup Report</button>
+                <div id="makeup-history" class="history-list"></div>
             </div>
 
-            <button onclick="logout()" class="danger-btn">Logout</button>
+            <button onclick="logout()" class="danger-btn">&#9211; Logout</button>
         </div>
+
+        <!-- ── Admin Dashboard ───────────────────────────────── -->
         <div id="admin-actions" class="admin-actions hidden">
-            <h2 style="color: white; text-shadow: 1px 1px 4px rgba(0,0,0,0.8);">Administrative Dashboard</h2>
+            <h2 class="admin-heading">&#128202; Administrative Dashboard</h2>
+
             <div class="card">
-                <div class="admin-controls">
-                    <button onclick="exportToExcel('attendance')" class="secondary">Export Attendance</button>
-                    <button onclick="exportToExcel('members')" class="secondary">Export Members</button>
-                    <button onclick="exportToExcel('guests')" class="secondary">Export Guests</button>
+                <!-- Live stats bento -->
+                <div class="admin-stats-bento">
+                    <div class="admin-stat-card">
+                        <span class="admin-stat-value" id="admin-stat-members">—</span>
+                        <span class="admin-stat-label">Members</span>
+                    </div>
+                    <div class="admin-stat-card">
+                        <span class="admin-stat-value" id="admin-stat-guests">—</span>
+                        <span class="admin-stat-label">Guests</span>
+                    </div>
+                    <div class="admin-stat-card">
+                        <span class="admin-stat-value" id="admin-stat-today">—</span>
+                        <span class="admin-stat-label">Today</span>
+                    </div>
                 </div>
-                
+
+                <!-- Export controls -->
+                <div class="admin-controls">
+                    <button onclick="exportToExcel('all')"        class="btn-success span-2-cols">&#11015; Download Master Database (CSV)</button>
+                    <button onclick="exportToExcel('attendance')" class="secondary">Export Attendance</button>
+                    <button onclick="exportToExcel('members')"    class="secondary">Export Members</button>
+                    <button onclick="exportToExcel('guests')"     class="secondary">Export Guests</button>
+                </div>
+
+                <!-- Recent records -->
                 <div class="admin-view-section">
                     <h3>Recent Attendance</h3>
                     <div id="admin-attendance-list" class="admin-list"></div>
-                    
+
                     <h3>Recent Guest Registrations</h3>
                     <div id="admin-guest-list" class="admin-list"></div>
                 </div>
 
-                <button onclick="exportDatabase()" class="secondary" style="width: 100%; margin-top: 15px; opacity: 0.7;">Download Full Backup (JSON)</button>
-                <button onclick="clearAllData()" class="danger-btn" style="width: 100%; margin-top: 10px; background-color: #c0392b;">Clear All Records</button>
-                <button onclick="logoutAdmin()" class="danger-btn" style="margin-top: 20px; width: 100%;">Exit Admin Mode</button>
+                <button onclick="exportDatabase()" class="secondary w-full mt-15 opacity-70">&#128190; Download Full Backup (JSON)</button>
+                <button onclick="clearAllData()"   class="danger-btn w-full mt-10">&#128465; Clear All Records</button>
+                <button onclick="logoutAdmin()"    class="danger-btn w-full mt-20">&#10006; Exit Admin Mode</button>
             </div>
         </div>
-    </div>
+
+    </div><!-- /.container -->
+
+    <!-- Toast notification container -->
+    <div id="toast-container" aria-live="polite" aria-atomic="false"></div>
+
     <script src="rotary-script.js"></script>
 </body>
 </html>
