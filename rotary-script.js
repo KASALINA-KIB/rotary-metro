@@ -9,6 +9,13 @@ db.version(1).stores({
     makeups:    '++id, user, club, date, loggedAt'
 });
 
+db.version(2).stores({
+    members:    'email, name, phone, password, buddyGroup',
+    guests:     '++id, email, name, phone, category, club, inviter',
+    attendance: '++id, email, phone, name, date, dateISO, type, buddyGroup',
+    makeups:    '++id, user, club, date, loggedAt'
+});
+
 // ============================================================
 //  FIREBASE FIRESTORE CONFIG
 // ============================================================
