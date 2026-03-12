@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotary Club of Kampala Metropolitan | Registration Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a5f2a;
+            --secondary: #d4a017;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --text: #333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--light);
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), #2d8a42);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .section h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .feature-card {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+        
+        .tech-tag {
+            background: var(--primary);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--dark);
+        }
+        
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .live-link {
+            display: inline-block;
+            background: #e8f5e9;
+            color: var(--primary);
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .project-image {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 12px;
+            margin: 1rem 0;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: 8px;
+        }
+        
+        .stat-box .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Rotary Club of Kampala Metropolitan</h1>
+        <p>Registration Portal Project</p>
+    </header>
+
+    <div class="container">
+        <div class="section">
+            <h2>About the Project</h2>
+            <p>A modern digital registration and attendance management system for the Rotary Club of Kampala Metropolitan. This web-based portal streamlines member registration, guest check-ins, attendance tracking, and makeup logging for rotary meetings.</p>
+            <a href="https://rotary-registration-6261e.web.app" target="_blank" class="live-link">
+                View Live Site
+            </a>
+        </div>
+
+        <div class="section">
+            <h2>Key Features</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>Member Portal</h3>
+                    <p>Secure login and registration system for club members with personalized dashboards.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Guest Registration</h3>
+                    <p>Easy registration for visiting Rotarians, Rotaractors, and guests with instant QR code access.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Attendance Tracking</h3>
+                    <p>Real-time attendance logging with buddy group selection and live statistics.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Makeup Logging</h3>
+                    <p>Track member visits to other clubs (up to 7 makeups per period) with automated reporting.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Admin Dashboard</h3>
+                    <p>Comprehensive admin controls for viewing records, exporting data (CSV/JSON), and managing attendance.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>QR Code Access</h3>
+                    <p>Scan-to-register functionality for quick and contactless attendance at events.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Project Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="number">3</div>
+                    <div>User Types</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">5</div>
+                    <div>Buddy Groups</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">7</div>
+                    <div>Makeup Slots</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">100%</div>
+                    <div>Web-Based</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Technology Stack</h2>
+            <div class="tech-stack">
+                <span class="tech-tag">HTML5</span>
+                <span class="tech-tag">CSS3</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">Dexie.js (IndexedDB)</span>
+                <span class="tech-tag">Firebase Hosting</span>
+                <span class="tech-tag">QR Code API</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Links</h2>
+            <div class="cta-buttons">
+                <a href="https://rotary-registration-6261e.web.app" target="_blank" class="btn btn-primary">
+                    Live Website
+                </a>
+                <a href="https://github.com/KASALINA-KIB/rotary-metro" target="_blank" class="btn btn-secondary">
+                    GitHub Repository
+                </a>
+                <a href="Rotary_Club_Registration_Portal_Project.pdf" target="_blank" class="btn btn-outline">
+                    Project Documentation
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Rotary Club of Kampala Metropolitan. All rights reserved.</p>
+        <p>Developed with passion for Rotary Service</p>
+    </footer>
+</body>
+</html>

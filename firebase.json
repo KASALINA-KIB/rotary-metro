@@ -11,6 +11,9 @@
       "**/*.exe",
       "**/*.pyc",
       "__pycache__/**"
+    ],
+    "rewrites": [
+      { "source": "**", "destination": "/portfolio.html" }
     ]
   }
 }
