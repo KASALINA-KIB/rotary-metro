@@ -16,29 +16,30 @@ let firestore = null;
 
 const initFirebase = () => {
     if (typeof firebase !== 'undefined' && !firestore) {
-        const firebaseConfig = {
-            apiKey: "AIzaSyBnXq8m2qFKYX8lZ9VJq6t5r7s3t2u1v0",
-            authDomain: "rotary-registration-6261e.firebaseapp.com",
-            projectId: "rotary-registration-6261e",
-            storageBucket: "rotary-registration-6261e.appspot.com",
-            messagingSenderId: "123456789012",
-            appId: "1:123456789012:web:abc123def456ghi789"
-        };
-        firebase.initializeApp(firebaseConfig);
-        firestore = firebase.firestore();
-        console.log('Firebase Firestore initialized');
+        try {
+            const firebaseConfig = {
+                apiKey: "AIzaSyBnXq8m2qFKYX8lZ9VJq6t5r7s3t2u1v0",
+                authDomain: "rotary-registration-6261e.firebaseapp.com",
+                projectId: "rotary-registration-6261e",
+                storageBucket: "rotary-registration-6261e.appspot.com",
+                messagingSenderId: "123456789012",
+                appId: "1:123456789012:web:abc123def456ghi789"
+            };
+            firebase.initializeApp(firebaseConfig);
+            firestore = firebase.firestore();
+            console.log('Firebase Firestore initialized');
+        } catch (e) {
+            console.error('Firebase init error:', e);
+        }
     }
 };
 
-// Initialize Firebase when script loads
-initFirebase();
-
 // ============================================================
-//  FIREBASE HELPER FUNCTIONS
+//  FIREBASE HELPER FUNCTIONS (optional - doesn't block if fails)
 // ============================================================
 const saveGuestToFirestore = async (guest) => {
     if (!firestore) {
-        console.log('Firestore not initialized, skipping cloud save');
+        console.log('Firestore not available, skipping cloud save');
         return;
     }
     try {
@@ -421,8 +422,11 @@ const sendWhatsAppThankYou = (phone, name) => {
 //  FORM SUBMISSIONS
 // ============================================================
 const handleFormSubmit = async (e, type) => {
+    console.log('handleFormSubmit called, type:', type);
     e.preventDefault();
     const submitBtn = e.submitter || e.target.querySelector('button[type="submit"]');
+    
+    console.log('submitBtn:', submitBtn);
     
     if (!submitBtn) {
         console.error('Submit button not found');
@@ -435,6 +439,7 @@ const handleFormSubmit = async (e, type) => {
     try {
         // Initialize Firebase if not already done
         initFirebase();
+        console.log('Processing form type:', type);
         
         if (type === 'member') {
             const email    = document.getElementById('m-email').value.trim();
@@ -471,6 +476,7 @@ const handleFormSubmit = async (e, type) => {
             }
 
         } else if (type === 'guest') {
+            console.log('Processing guest form');
             const guest = {
                 category: document.getElementById('g-category').value,
                 name:     document.getElementById('g-name').value.trim(),
@@ -482,6 +488,8 @@ const handleFormSubmit = async (e, type) => {
                 registeredAt: new Date().toISOString()
             };
 
+            console.log('Guest data:', guest);
+
             const today = todayISO();
 
             // BUG FIX: Duplicate check uses stored `dateISO` field (YYYY-MM-DD)
@@ -492,11 +500,13 @@ const handleFormSubmit = async (e, type) => {
                 .toArray();
             if (existing.length > 0) {
                 showToast("You've already registered for today's fellowship!", 'warning');
+                setButtonLoading(submitBtn, false);
                 return;
             }
 
             // Add to guest master list only on first ever visit
             const existingGuestEntry = await db.guests.where('phone').equals(guest.phone).first();
+            console.log('Existing guest entry:', existingGuestEntry);
             if (!existingGuestEntry) {
                 await db.guests.add(guest);
                 // Save to Firebase Firestore cloud
@@ -518,6 +528,7 @@ const handleFormSubmit = async (e, type) => {
             saveAttendanceToFirestore(attendanceRecord);
 
             showToast(`Welcome, ${guest.name}! Registration confirmed.`, 'success');
+            console.log('Guest registration complete');
 
             // Send WhatsApp thank-you message
             sendWhatsAppThankYou(guest.phone, guest.name);
@@ -525,6 +536,9 @@ const handleFormSubmit = async (e, type) => {
             e.target.reset();
             showForm('selection-screen');
         }
+    } catch (error) {
+        console.error('Form submission error:', error);
+        showToast('Error: ' + error.message, 'error');
     } finally {
         setButtonLoading(submitBtn, false);
     }
@@ -682,6 +696,9 @@ const login = async (user) => {
 //  DOM READY
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
+    
+    // Initialize Firebase
+    initFirebase();
 
     // Auto-navigate if arrived via QR code
     const urlParams = new URLSearchParams(window.location.search);
