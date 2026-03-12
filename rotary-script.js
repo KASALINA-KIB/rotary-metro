@@ -10,6 +10,86 @@ db.version(1).stores({
 });
 
 // ============================================================
+//  FIREBASE FIRESTORE CONFIG
+// ============================================================
+let firestore = null;
+
+const initFirebase = () => {
+    if (typeof firebase !== 'undefined' && !firestore) {
+        const firebaseConfig = {
+            apiKey: "AIzaSyBnXq8m2qFKYX8lZ9VJq6t5r7s3t2u1v0",
+            authDomain: "rotary-registration-6261e.firebaseapp.com",
+            projectId: "rotary-registration-6261e",
+            storageBucket: "rotary-registration-6261e.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abc123def456ghi789"
+        };
+        firebase.initializeApp(firebaseConfig);
+        firestore = firebase.firestore();
+        console.log('Firebase Firestore initialized');
+    }
+};
+
+// Initialize Firebase when script loads
+initFirebase();
+
+// ============================================================
+//  FIREBASE HELPER FUNCTIONS
+// ============================================================
+const saveGuestToFirestore = async (guest) => {
+    if (!firestore) {
+        console.log('Firestore not initialized, skipping cloud save');
+        return;
+    }
+    try {
+        await firestore.collection('guests').add({
+            ...guest,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        console.log('Guest saved to Firestore');
+    } catch (error) {
+        console.error('Error saving to Firestore:', error);
+    }
+};
+
+const saveAttendanceToFirestore = async (attendance) => {
+    if (!firestore) return;
+    try {
+        await firestore.collection('attendance').add({
+            ...attendance,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        console.log('Attendance saved to Firestore');
+    } catch (error) {
+        console.error('Error saving attendance to Firestore:', error);
+    }
+};
+
+const saveMemberToFirestore = async (member) => {
+    try {
+        await firestore.collection('members').doc(member.email).set({
+            ...member,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        console.log('Member saved to Firestore');
+    } catch (error) {
+        console.error('Error saving member to Firestore:', error);
+    }
+};
+
+const saveMakeupToFirestore = async (makeup) => {
+    try {
+        await firestore.collection('makeups').add({
+            ...makeup,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        console.log('Makeup saved to Firestore');
+    } catch (error) {
+        console.error('Error saving makeup to Firestore:', error);
+    }
+};
+
+// ============================================================
 //  SECURITY NOTE
 //  The admin passcode is stored client-side and is therefore
 //  visible to anyone with browser DevTools access.
@@ -343,9 +423,19 @@ const sendWhatsAppThankYou = (phone, name) => {
 const handleFormSubmit = async (e, type) => {
     e.preventDefault();
     const submitBtn = e.submitter || e.target.querySelector('button[type="submit"]');
+    
+    if (!submitBtn) {
+        console.error('Submit button not found');
+        showToast('Error: Submit button not found', 'error');
+        return;
+    }
+    
     setButtonLoading(submitBtn, true);
 
     try {
+        // Initialize Firebase if not already done
+        initFirebase();
+        
         if (type === 'member') {
             const email    = document.getElementById('m-email').value.trim();
             const password = document.getElementById('m-password').value;
@@ -407,9 +497,13 @@ const handleFormSubmit = async (e, type) => {
 
             // Add to guest master list only on first ever visit
             const existingGuestEntry = await db.guests.where('phone').equals(guest.phone).first();
-            if (!existingGuestEntry) await db.guests.add(guest);
+            if (!existingGuestEntry) {
+                await db.guests.add(guest);
+                // Save to Firebase Firestore cloud
+                saveGuestToFirestore(guest);
+            }
 
-            await db.attendance.add({
+            const attendanceRecord = {
                 name:       guest.name,
                 email:      guest.email,
                 phone:      guest.phone,
@@ -417,7 +511,11 @@ const handleFormSubmit = async (e, type) => {
                 dateISO:    today,
                 type:       'Guest Attendance',
                 buddyGroup: 'N/A'
-            });
+            };
+            
+            await db.attendance.add(attendanceRecord);
+            // Save attendance to Firebase Firestore
+            saveAttendanceToFirestore(attendanceRecord);
 
             showToast(`Welcome, ${guest.name}! Registration confirmed.`, 'success');
 
